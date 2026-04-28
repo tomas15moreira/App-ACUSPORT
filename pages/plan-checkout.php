@@ -1,6 +1,10 @@
 <?php
-$plan_id = isset($_GET['plan']) ? $_GET['plan'] : 'essencia';
+if (!isset($_SESSION['user_id'])) {
+    header('Location: ' . BASE_URL . '/?page=login&redirect=plans');
+    exit;
+}
 
+$plan_id = isset($_GET['plan']) ? $_GET['plan'] : 'essencia';
 $plans = [
     'essencia' => [
         'name' => 'Plano Essência',
@@ -18,20 +22,16 @@ $plans = [
         'desc' => '4 Fórmulas/mês + Consulta Online + 25% Desconto'
     ]
 ];
-
 if (!isset($plans[$plan_id])) {
     $plan_id = 'essencia';
 }
 $plan = $plans[$plan_id];
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Simulacao de pagamento processado
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
     }
     $_SESSION['user_plan'] = $plan_id;
     
-    // Persist in DB if user is logged in
     if (isset($_SESSION['user_id'])) {
         try {
             $db = getDB();
