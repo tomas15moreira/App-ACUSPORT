@@ -286,7 +286,6 @@ function handleLogin(e) {
     const data = { action: 'login', email: form.email.value, password: form.password.value };
     const btn = form.querySelector('button[type="submit"]');
     btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> A entrar...';
-
     fetch(`${API_URL}/auth.php`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -294,12 +293,20 @@ function handleLogin(e) {
     })
     .then(r => r.json())
     .then(res => {
-        if (res.success) { showToast('Bem-vindo!', 'success'); setTimeout(() => window.location.href = BASE_URL + '/?page=home', 800); }
+        if (res.success) {
+            showToast('Bem-vindo!', 'success');
+            const params = new URLSearchParams(window.location.search);
+            const redirect = params.get('redirect');
+            let dest = BASE_URL + '/?page=home';
+            if (redirect === 'checkout') dest = BASE_URL + '/?page=checkout';
+            else if (redirect === 'plans') dest = BASE_URL + '/?page=plans';
+            else if (redirect === 'cart') dest = BASE_URL + '/?page=cart';
+            setTimeout(() => window.location.href = dest, 800);
+        }
         else { showToast(res.message, 'error'); btn.disabled = false; btn.innerHTML = 'Entrar'; }
     })
     .catch(() => { showToast('Erro de conexão', 'error'); btn.disabled = false; btn.innerHTML = 'Entrar'; });
 }
-
 function handleRecover(e) {
     e.preventDefault();
     const form = e.target;
