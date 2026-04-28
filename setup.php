@@ -3,51 +3,33 @@ require_once 'config/database.php';
 $db = getDB();
 
 try {
-    // Criar tabelas
-    $db->exec("CREATE TABLE IF NOT EXISTS `categories` (`id` int NOT NULL AUTO_INCREMENT, `nome` varchar(100) NOT NULL, `slug` varchar(100) NOT NULL, `icone` varchar(10) DEFAULT NULL, `descricao` text, `ordem` int DEFAULT 0, PRIMARY KEY (`id`), UNIQUE KEY `slug` (`slug`)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
-
-    $db->exec("CREATE TABLE IF NOT EXISTS `users` (`id` int NOT NULL AUTO_INCREMENT, `nome` varchar(100) NOT NULL, `email` varchar(150) NOT NULL, `password` varchar(255) NOT NULL, `telefone` varchar(20) DEFAULT NULL, `morada` text, `codigo_postal` varchar(10) DEFAULT NULL, `cidade` varchar(100) DEFAULT NULL, `is_admin` tinyint(1) NOT NULL DEFAULT 0, `created_at` timestamp DEFAULT CURRENT_TIMESTAMP, `updated_at` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, PRIMARY KEY (`id`), UNIQUE KEY `email` (`email`)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
-
-    $db->exec("CREATE TABLE IF NOT EXISTS `products` (`id` int NOT NULL AUTO_INCREMENT, `nome` varchar(150) NOT NULL, `slug` varchar(150) NOT NULL, `preco` decimal(10,2) NOT NULL, `descricao_curta` varchar(255) DEFAULT NULL, `descricao_mtc` text, `modo_utilizacao` text, `restricoes` text, `imagem` varchar(255) DEFAULT NULL, `category_id` int NOT NULL, `destaque` tinyint(1) DEFAULT 0, `stock` int DEFAULT 100, `created_at` timestamp DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY (`id`), UNIQUE KEY `slug` (`slug`), KEY `category_id` (`category_id`), CONSTRAINT `products_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
-
-    $db->exec("CREATE TABLE IF NOT EXISTS `orders` (`id` int NOT NULL AUTO_INCREMENT, `user_id` int DEFAULT NULL, `total` decimal(10,2) NOT NULL, `estado` enum('pendente','processando','enviado','entregue','cancelado') DEFAULT 'pendente', `nome_envio` varchar(150) NOT NULL, `email_envio` varchar(150) NOT NULL, `telefone_envio` varchar(20) DEFAULT NULL, `morada_envio` text NOT NULL, `codigo_postal_envio` varchar(10) NOT NULL, `cidade_envio` varchar(100) NOT NULL, `metodo_pagamento` varchar(50) DEFAULT 'cartao', `notas` text, `created_at` timestamp DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY (`id`), KEY `user_id` (`user_id`), CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
-
-    $db->exec("CREATE TABLE IF NOT EXISTS `order_items` (`id` int NOT NULL AUTO_INCREMENT, `order_id` int NOT NULL, `product_id` int NOT NULL, `quantidade` int NOT NULL, `preco_unitario` decimal(10,2) NOT NULL, PRIMARY KEY (`id`), KEY `order_id` (`order_id`), KEY `product_id` (`product_id`), CONSTRAINT `order_items_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE, CONSTRAINT `order_items_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
-
-    $db->exec("CREATE TABLE IF NOT EXISTS `cart_items` (`id` int NOT NULL AUTO_INCREMENT, `session_id` varchar(128) DEFAULT NULL, `user_id` int DEFAULT NULL, `product_id` int NOT NULL, `quantidade` int NOT NULL DEFAULT 1, `created_at` timestamp DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY (`id`), KEY `user_id` (`user_id`), KEY `product_id` (`product_id`), CONSTRAINT `cart_items_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE, CONSTRAINT `cart_items_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
-
-    // Categorias
-    $db->exec("INSERT IGNORE INTO `categories` VALUES (1,'Emagrecimento','emagrecimento',NULL,NULL,1),(2,'Energia','sistema-nervoso-cerebro-energia',NULL,NULL,2),(3,'Articulações','ossos-articulacoes-musculos-e-tendoes',NULL,NULL,3),(4,'Fitoterapia','fitoterapia-suplementacao-alimentar',NULL,NULL,4)");
-
-    // Produtos
-    $stmt = $db->prepare("INSERT IGNORE INTO `products` (id, nome, slug, preco, descricao_curta, imagem, category_id, destaque, stock) VALUES (?,?,?,?,?,?,?,?,?)");
-    
     $produtos = [
-        [1,'Ponderal Fit 1','ponderal-fit-1',24.60,'Suplemento para apoiar processos de emagrecimento.','ponderal-fit-1.jpg',1,1,100],
-        [2,'Ponderal Fit 2','ponderal-fit-2',22.50,'Suplemento para auxiliar na perda de gordura.','ponderal-fit-2.jpg',1,1,100],
-        [3,'Neuro Mais','neuro-mais',29.66,'Suplemento para combater fadiga física e mental.','neuro-mais.jpg',2,1,100],
-        [4,'Flexicalcium','flexicalcium',29.66,'Suplemento para apoio ósseo, muscular e cartilagens.','flexicalcium.jpg',3,1,100],
-        [5,'F-44','f-44',28.79,'Suplemento fitoterápico de Medicina Tradicional Chinesa.','f-44.jpg',4,0,100],
-        [6,'F-47','f-47',28.79,'Suplemento fitoterápico de Medicina Tradicional Chinesa.','f-47.jpg',4,0,100],
-        [7,'F-1','f-1',25.50,'Suplemento fitoterápico 100% natural.','f-1.jpg',4,0,100],
-        [8,'F-34 A','f-34-a',25.50,'Suplemento fitoterápico 100% natural.','f-34-a.jpg',4,0,100],
-        [9,'F-25 B','f-25-b',25.50,'Suplemento fitoterápico 100% natural.','f-25-b.jpg',4,0,100],
-        [10,'F-54','f-54',25.50,'Suplemento fitoterápico 100% natural.','f-54.jpg',4,0,100],
-        [11,'F-41 B','f-41-b',25.50,'Suplemento fitoterápico 100% natural.','f-41-b.jpg',4,0,100],
-        [12,'F-34 B','f-34-b',25.50,'Suplemento fitoterápico 100% natural.','f-34-b.jpg',4,0,100],
-        [13,'F-134 A','f-134-a',25.50,'Suplemento fitoterápico 100% natural.','f-134-a.jpg',4,0,100],
-        [14,'F-39 B','f-39-b',25.50,'Suplemento fitoterápico 100% natural.','f-39-b.jpg',4,0,100],
-        [15,'F-33 B','f-33-b',25.50,'Suplemento fitoterápico 100% natural.','f-33-b.jpg',4,0,100],
-        [16,'F-31 B','f-31-b',25.50,'Suplemento fitoterápico 100% natural.','f-31-b.jpg',4,0,100],
+        [1, "Este suplemento, disponível em embalagem de 60 cápsulas, foi desenvolvido para apoiar processos de emagrecimento, ajudando na redução da gordura corporal e localizada, no combate à celulite e no controlo eficaz do apetite. A sua fórmula completa promove uma sensação de saciedade imediata e estimula o metabolismo através de um efeito termogénico que evita a absorção de gorduras pelo organismo. Para além de contribuir para a diminuição da retenção de líquidos e facilitar o trânsito intestinal, atua também no equilíbrio metabólico, ajudando a controlar os níveis de glicémia e de colesterol."],
+        [2, "Este suplemento, disponível em embalagem de 60 cápsulas, foi desenvolvido para auxiliar na perda de gordura, sendo especialmente indicado para processos de emagrecimento associados a níveis elevados de colesterol ou glicose no sangue. A sua fórmula combina o mineral Crómio com extratos botânicos como Garcinia Cambogia, Gengibre, Aloé Vera e Cascara Sagrada para atuar de forma dupla no metabolismo e no sistema digestivo."],
+        [3, "Este suplemento, disponível numa embalagem de 20 ampolas, foi desenvolvido para combater ativamente a fadiga física, mental e emocional, otimizando o rendimento cerebral, a memória e a capacidade de concentração. A sua fórmula revitalizante combina Vitamina C e vitaminas do complexo B com extratos naturais estimulantes como Guaraná, Ginseng Coreano, Rhodiola Rosea e Gengibre."],
+        [4, "Este suplemento, disponível numa embalagem de 60 cápsulas, foi desenvolvido para apoiar o normal funcionamento da estrutura óssea, muscular e das cartilagens, destacando-se pela sua forte ação analgésica e anti-inflamatória. A sua fórmula combina vitaminas C e D, Glucosamina, Condroitina e MSM, potenciados por extratos naturais de Curcuma e Boswellia."],
+        [5, "Suplemento alimentar fitoterápico à base de plantas de medicina tradicional chinesa, 100% natural. Modo de utilização: Em geral 50 gotas diluídas em água 2 vezes ao dia."],
+        [6, "Suplemento alimentar fitoterápico à base de plantas de medicina tradicional chinesa, 100% natural. Ação: Retira calor no Qi. Purifica calor perverso. Regenera produção de líquidos orgânicos. Modo de utilização: Em geral 50 gotas diluídas em água 2 vezes ao dia."],
+        [7, "Suplemento alimentar fitoterápico à base de plantas de medicina tradicional chinesa, 100% natural. Modo de utilização: Tomar 50 gotas diluídas em água 2 vezes ao dia, ou de acordo com a recomendação de um terapeuta."],
+        [8, "Suplemento alimentar fitoterápico à base de plantas de medicina tradicional chinesa, 100% natural. Indicado para astenia geral, fadiga crónica, impotência, fraqueza lombar e rejuvenescimento. Tonifica o Yin e o Yang, o Sangue e a Energia."],
+        [9, "Suplemento alimentar fitoterápico à base de plantas de medicina tradicional chinesa, 100% natural. Indicado para lombalgia crónica, dores crónicas das costas e fraqueza dos joelhos. Elimina Vento, frio e humidade; Tonifica o Rim."],
+        [10, "Suplemento alimentar fitoterápico à base de plantas de medicina tradicional chinesa, 100% natural. Indicado para hemorroidas, hemorragias e calor nos intestinos. Modo de utilização: Tomar 50 gotas diluídas em água 2 vezes ao dia."],
+        [11, "Suplemento alimentar fitoterápico à base de plantas de medicina tradicional chinesa, 100% natural. Indicado para hemorroidas, dores epigástricas, prisão de ventre e úlceras da boca. Nutre o Yin do Estômago."],
+        [12, "Suplemento alimentar fitoterápico à base de plantas de medicina tradicional chinesa, 100% natural. Indicado para astenia, cansaço, tonturas, distúrbios de memória e concentração. Tonifica o Yin e Yang em geral."],
+        [13, "Suplemento alimentar fitoterápico à base de plantas de medicina tradicional chinesa, 100% natural. Indicado para má circulação, varizes, prevenção de AVC e enfarte do miocárdio. Ativa a circulação do Sangue e Energia."],
+        [14, "Suplemento alimentar fitoterápico à base de plantas de medicina tradicional chinesa, 100% natural. Indicado para garganta inflamada, dores de cabeça, sintomas de constipação e urticária. Dispersa o Vento e o Calor."],
+        [15, "Suplemento alimentar fitoterápico à base de plantas de medicina tradicional chinesa, 100% natural. Indicado para asma, tosse com expectoração viscosa e respiração difícil. Dispersa e diminui a energia patogénica no Pulmão."],
+        [16, "Suplemento alimentar fitoterápico à base de plantas de medicina tradicional chinesa, 100% natural. Indicado para cefaleias de tensão, vertigens, convulsões e entorpecimento dos membros. Acalma o Fígado e alimenta o Yin."],
     ];
 
+    $stmt = $db->prepare("UPDATE products SET descricao_mtc = ? WHERE id = ?");
+    
     foreach ($produtos as $p) {
-        $stmt->execute($p);
+        $stmt->execute([$p[1], $p[0]]);
     }
 
-    echo "<h2 style='color:green'>Base de dados criada com sucesso!</h2>";
-    echo "<p>Tabelas criadas e " . count($produtos) . " produtos inseridos.</p>";
-    echo "<p><a href='/'>Ir para a app</a></p>";
+    echo "<h2 style='color:green'>Descrições actualizadas com sucesso!</h2>";
+    echo "<p><a href='/?page=shop'>Ver loja</a></p>";
 
 } catch (Exception $e) {
     echo "<h2 style='color:red'>Erro: " . $e->getMessage() . "</h2>";
