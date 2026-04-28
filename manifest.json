@@ -1,0 +1,14 @@
+{
+    "name": "AcuSport",
+    "short_name": "AcuSport",
+    "description": "Suplementação Natural — Medicina Tradicional Chinesa",
+    "start_url": "/App-Web/?page=home",
+    "display": "standalone",
+    "background_color": "#FAF6F0",
+    "theme_color": "#4A5A4A",
+    "orientation": "portrait",
+    "icons": [
+        { "src": "/App-Web/assets/images/icon-192.png", "sizes": "192x192", "type": "image/png" },
+        { "src": "/App-Web/assets/images/icon-512.png", "sizes": "512x512", "type": "image/png" }
+    ]
+}

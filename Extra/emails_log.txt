@@ -1,0 +1,27 @@
+=================================================
+Date: 2026-04-26 21:26:53
+To: beatrizneto.4@gmail.com
+Subject: Recuperação de Password - AcuSport
+Link: /App-Web/?page=recover&token=62000304936fc200cb1545502ca6ffc7a90027523aadb67e186413ce7dfab58b
+
+=================================================
+Date: 2026-04-26 21:28:53
+To: beatrizneto.4@gmail.com
+Subject: Recuperação de Password - AcuSport
+Link: /App-Web/?page=recover&token=ff877ae2cc8d915f40a94648d8674be75475998829f5179d155011e8b2c9afca
+
+=================================================
+Date: 2026-04-26 21:30:17
+To: beatrizneto.4@gmail.com
+Subject: Confirmação de Encomenda #3 - AcuSport
+Body:
+Olá Beatriz Neto,
+
+Recebemos a sua encomenda com sucesso!
+Referência da Encomenda: #3
+Total: 34,56 €
+
+Avisaremos assim que a encomenda for expedida.
+
+Obrigado por escolher a AcuSport!
+
