@@ -1,5 +1,10 @@
 <?php
 // Checkout
+if (!isset($_SESSION['user_id'])) {
+    header('Location: ' . BASE_URL . '/?page=login&redirect=checkout');
+    exit;
+}
+
 $items = [];
 $subtotal = 0;
 $user = null;
@@ -9,7 +14,6 @@ try {
     $totals = calculateCartTotals();
     if (isLoggedIn()) $user = getCurrentUser();
 } catch (Exception $e) {}
-
 if (empty($items)) {
     echo '<div class="cart-empty fade-in"><i class="fas fa-shopping-bag"></i><h2>Carrinho vazio</h2><p>Adicione produtos antes de finalizar.</p><a href="'.BASE_URL.'/?page=shop" class="btn btn-gold" style="width:auto;display:inline-flex">Ver Loja</a></div>';
     return;
