@@ -1,13 +1,13 @@
 <?php
 // =============================================
 // AcuSport - Configuração da Base de Dados
-// Conexão MySQL via Laragon
+// Railway Environment Variables
 // =============================================
 
-define('DB_HOST', 'localhost');
-define('DB_NAME', 'acusport_app');
-define('DB_USER', 'root');
-define('DB_PASS', '');
+define('DB_HOST', getenv('MYSQLHOST') ?: 'localhost');
+define('DB_NAME', getenv('MYSQLDATABASE') ?: 'acusport_app');
+define('DB_USER', getenv('MYSQLUSER') ?: 'root');
+define('DB_PASS', getenv('MYSQLPASSWORD') ?: '');
 define('DB_CHARSET', 'utf8mb4');
 
 // Conexão PDO
@@ -30,7 +30,7 @@ function getDB() {
 }
 
 // URL base da app
-define('BASE_URL', '/App-Web');
+define('BASE_URL', '');
 define('ASSETS_URL', BASE_URL . '/assets');
 define('UPLOADS_URL', BASE_URL . '/uploads');
 
