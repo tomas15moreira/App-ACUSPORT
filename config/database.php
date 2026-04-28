@@ -25,6 +25,9 @@ function getDB() {
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
                 PDO::ATTR_EMULATE_PREPARES => false,
             ]);
+            $pdo->exec("SET NAMES utf8mb4");
+            $pdo->exec("SET CHARACTER SET utf8mb4");
+            $pdo->exec("SET character_set_connection=utf8mb4");
         } catch (PDOException $e) {
             http_response_code(500);
             die(json_encode(['error' => 'Erro na conexão à base de dados: ' . $e->getMessage()]));
