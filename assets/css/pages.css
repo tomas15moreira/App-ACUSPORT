@@ -2,12 +2,13 @@
 
 /* Hero Section */
 .hero {
-    background: linear-gradient(135deg, var(--sage-dark), #111a15);
     padding: 60px 24px 48px;
     text-align: center;
     color: var(--white);
     position: relative;
     overflow: hidden;
+    /* background-image definido inline no home.php via ASSETS_URL */
+    background-color: var(--sage-dark); /* fallback se imagem não carregar */
 }
 .hero::before {
     content: '';
@@ -230,7 +231,9 @@
 /* VIP Banner Section */
 .vip-section { padding: 0 20px 32px; }
 .vip-banner {
-    background: linear-gradient(135deg, var(--gold-dark), #a07828, var(--gold));
+    background:
+        linear-gradient(rgba(203,160,82,0.88), rgba(184,148,63,0.92)),
+        url('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3') center/cover no-repeat;
     border-radius: var(--radius-xl);
     padding: 36px 24px;
     text-align: center;
@@ -239,15 +242,7 @@
     overflow: hidden;
     box-shadow: 0 12px 32px rgba(200,164,92,0.35);
 }
-.vip-banner::before {
-    content: '';
-    position: absolute;
-    top: -40px; right: -40px;
-    width: 160px; height: 160px;
-    background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
-    border-radius: 50%;
-    pointer-events: none;
-}
+.vip-banner::before { display: none; }
 .vip-label {
     display: inline-flex;
     align-items: center;
@@ -281,6 +276,9 @@
     border: 1.5px solid rgba(255,255,255,0.3);
     color: var(--white) !important;
     backdrop-filter: blur(4px);
+    border-radius: 28px !important;
+    width: auto;
+    padding: 14px 32px;
 }
 .vip-banner .btn-dark:active {
     background: rgba(0,0,0,0.4) !important;
