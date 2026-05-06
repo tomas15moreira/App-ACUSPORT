@@ -9,7 +9,7 @@ try {
 ?>
 
 <!-- Hero Section -->
-<section class="hero slide-up">
+<section class="hero slide-up" style="background-image: linear-gradient(rgba(17,29,36,0.45), rgba(17,29,36,0.72)), url('<?= ASSETS_URL ?>/images/foto-index2.png'); background-size: cover; background-position: center;">
     <img src="<?= ASSETS_URL ?>/images/logo.png" alt="AcuSport Logo" class="floating-logo" style="height: 54px; margin-bottom: 24px; filter: brightness(0) invert(1);">
     <span class="section-label brand-label">A SUA SAÚDE NO ESTADO PURO</span>
     <h1>A sabedoria milenar, com a ciência de hoje.</h1>
