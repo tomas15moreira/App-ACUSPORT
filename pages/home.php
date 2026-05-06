@@ -9,7 +9,7 @@ try {
 ?>
 
 <!-- Hero Section -->
-<section class="hero slide-up" style="background-image: linear-gradient(rgba(17,29,36,0.45), rgba(17,29,36,0.72)), url('<?= ASSETS_URL ?>/images/foto-index2.jpeg'); background-size: cover; background-position: center;">
+<section class="hero slide-up" style="background-image: linear-gradient(rgba(58,74,58,0.72), rgba(42,58,42,0.80)), url('<?= ASSETS_URL ?>/images/foto-index2.jpeg'); background-size: cover; background-position: center;">
     <img src="<?= ASSETS_URL ?>/images/logo.png" alt="AcuSport Logo" class="floating-logo" style="height: 54px; margin-bottom: 24px; filter: brightness(0) invert(1);">
     <span class="section-label brand-label">A SUA SAÚDE NO ESTADO PURO</span>
     <h1>A sabedoria milenar, com a ciência de hoje.</h1>
@@ -85,18 +85,6 @@ try {
         <div class="featured-scroll-thumb" id="featured-thumb"></div>
     </div>
 </section>
-<script>
-(function(){
-    var el = document.querySelector('.featured-scroll');
-    var thumb = document.getElementById('featured-thumb');
-    if (!el || !thumb) return;
-    el.addEventListener('scroll', function(){
-        var max = el.scrollWidth - el.clientWidth;
-        var pct = max > 0 ? (el.scrollLeft / max) * 50 : 0;
-        thumb.style.transform = 'translateX(' + pct + '%)';
-    });
-})();
-</script>
 <?php endif; ?>
 
 <!-- Categorias -->
@@ -133,7 +121,7 @@ try {
     <span class="section-label">COMUNIDADE</span>
     <h2 class="section-title">O que dizem os nossos atletas</h2>
     
-    <div class="reviews-slider">
+    <div class="reviews-slider" id="reviews-slider">
         <!-- Review 1 -->
         <div class="review-card">
             <div class="review-header">
@@ -146,7 +134,7 @@ try {
             <div class="review-stars">
                 <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
             </div>
-            <p class="review-text">"A dor lombar acompanhava-me em todos os treinos pesados. A fórmula F-25B mudou completamente a minha recuperação. Sinto-me limpo e sem a dependência de anti-inflamatórios de farmácia."</p>
+            <p class="review-text">"A dor lombar acompanhava-me em todos os treinos pesados. A fórmula F-25B mudou completamente a minha recuperação."</p>
         </div>
         
         <!-- Review 2 -->
@@ -161,7 +149,7 @@ try {
             <div class="review-stars">
                 <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
             </div>
-            <p class="review-text">"Sou assinante do plano Vitalidade. Receber as fórmulas em casa todos os meses sem me preocupar é fantástico. O foco que o Neuro Mais me dá no trabalho é inexplicável."</p>
+            <p class="review-text">"Sou assinante do plano Vitalidade. O foco que o Neuro Mais me dá no trabalho é inexplicável."</p>
         </div>
         
         <!-- Review 3 -->
@@ -176,10 +164,36 @@ try {
             <div class="review-stars">
                 <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
             </div>
-            <p class="review-text">"Finalmente uma marca que entende que a nutrição vai além da proteína. A abordagem da AcuSport à Medicina Tradicional Chinesa elevou o meu rendimento nas maratonas."</p>
+            <p class="review-text">"A abordagem da AcuSport à Medicina Tradicional Chinesa elevou o meu rendimento nas maratonas."</p>
         </div>
     </div>
+    <div class="reviews-scroll-track">
+        <div class="reviews-scroll-thumb" id="reviews-thumb"></div>
+    </div>
 </section>
+<script>
+(function(){
+    function initScrollBar(scrollEl, thumbEl, thumbWidthPct) {
+        if (!scrollEl || !thumbEl) return;
+        scrollEl.addEventListener('scroll', function(){
+            var max = scrollEl.scrollWidth - scrollEl.clientWidth;
+            if (max <= 0) return;
+            var pct = (scrollEl.scrollLeft / max) * (100 - thumbWidthPct);
+            thumbEl.style.transform = 'translateX(' + (pct / thumbWidthPct * 100) + '%)';
+        });
+    }
+    initScrollBar(
+        document.querySelector('.featured-scroll'),
+        document.getElementById('featured-thumb'),
+        50
+    );
+    initScrollBar(
+        document.getElementById('reviews-slider'),
+        document.getElementById('reviews-thumb'),
+        33
+    );
+})();
+</script>
 
 <!-- Clube VIP Banner -->
 <section class="vip-section animate-on-scroll">
