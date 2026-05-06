@@ -80,7 +80,23 @@ try {
         </a>
         <?php endforeach; ?>
     </div>
+    <!-- Barra indicadora de scroll -->
+    <div class="featured-scroll-track">
+        <div class="featured-scroll-thumb" id="featured-thumb"></div>
+    </div>
 </section>
+<script>
+(function(){
+    var el = document.querySelector('.featured-scroll');
+    var thumb = document.getElementById('featured-thumb');
+    if (!el || !thumb) return;
+    el.addEventListener('scroll', function(){
+        var max = el.scrollWidth - el.clientWidth;
+        var pct = max > 0 ? (el.scrollLeft / max) * 50 : 0;
+        thumb.style.transform = 'translateX(' + pct + '%)';
+    });
+})();
+</script>
 <?php endif; ?>
 
 <!-- Categorias -->
@@ -206,4 +222,3 @@ try {
         </p>
     </div>
 </section>
-
