@@ -109,11 +109,32 @@
     display: flex;
     gap: 16px;
     overflow-x: auto;
-    padding: 4px 20px 8px;
+    padding: 4px 20px 12px;
     scrollbar-width: none;
     -ms-overflow-style: none;
+    scroll-snap-type: x mandatory;
 }
 .featured-scroll::-webkit-scrollbar { display: none; }
+.featured-scroll .product-card { scroll-snap-align: start; }
+
+/* Scroll indicator bar */
+.featured-scroll-track {
+    height: 3px;
+    background: var(--cream-dark);
+    border-radius: 3px;
+    margin: 8px 20px 0;
+    overflow: hidden;
+    position: relative;
+}
+.featured-scroll-thumb {
+    position: absolute;
+    top: 0; left: 0;
+    height: 100%;
+    width: 50%;
+    background: linear-gradient(90deg, var(--gold), var(--gold-dark));
+    border-radius: 3px;
+    transition: transform 0.2s ease;
+}
 .product-card {
     background: var(--white);
     border-radius: var(--radius-lg);
@@ -209,20 +230,21 @@
 /* VIP Banner Section */
 .vip-section { padding: 0 20px 32px; }
 .vip-banner {
-    background: linear-gradient(135deg, var(--sage-dark), #1a2a1a);
+    background: linear-gradient(135deg, var(--gold-dark), #a07828, var(--gold));
     border-radius: var(--radius-xl);
     padding: 36px 24px;
     text-align: center;
     color: var(--white);
     position: relative;
     overflow: hidden;
+    box-shadow: 0 12px 32px rgba(200,164,92,0.35);
 }
 .vip-banner::before {
     content: '';
     position: absolute;
     top: -40px; right: -40px;
     width: 160px; height: 160px;
-    background: radial-gradient(circle, rgba(200,165,115,0.12) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
     border-radius: 50%;
     pointer-events: none;
 }
@@ -233,7 +255,7 @@
     font-size: 0.65rem;
     font-weight: 700;
     letter-spacing: 2px;
-    color: var(--gold-light);
+    color: rgba(255,255,255,0.85);
     text-transform: uppercase;
     margin-bottom: 12px;
 }
@@ -242,15 +264,26 @@
     font-size: 1.6rem;
     font-weight: 600;
     margin-bottom: 12px;
+    color: var(--white);
 }
 .vip-banner p {
     font-size: 0.85rem;
-    opacity: 0.85;
+    opacity: 0.9;
     line-height: 1.6;
     margin-bottom: 24px;
     max-width: 280px;
     margin-left: auto;
     margin-right: auto;
+    color: var(--white);
+}
+.vip-banner .btn-dark {
+    background: rgba(0,0,0,0.25) !important;
+    border: 1.5px solid rgba(255,255,255,0.3);
+    color: var(--white) !important;
+    backdrop-filter: blur(4px);
+}
+.vip-banner .btn-dark:active {
+    background: rgba(0,0,0,0.4) !important;
 }
 
 /* Animate on scroll (intersection observer hook) */
