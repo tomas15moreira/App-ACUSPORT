@@ -110,7 +110,9 @@ if ($page === 'product' && isset($_GET['id'])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <!-- App CSS -->
-    <link rel="stylesheet" href="<?= ASSETS_URL ?>/css/app.css">
+    <link rel="stylesheet" href="<?= ASSETS_URL ?>/css/base.css">
+    <link rel="stylesheet" href="<?= ASSETS_URL ?>/css/components.css">
+    <link rel="stylesheet" href="<?= ASSETS_URL ?>/css/pages.css">
     <?php if (strpos($page, 'admin') === 0): ?>
     <link rel="stylesheet" href="<?= ASSETS_URL ?>/css/admin.css">
     <?php endif; ?>
