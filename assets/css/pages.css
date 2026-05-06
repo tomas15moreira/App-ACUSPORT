@@ -415,5 +415,3 @@ textarea.form-input-clean { resize: vertical; min-height: 40px; }
 .plan-features li { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 16px; font-size: 0.9rem; color: var(--text-dark); line-height: 1.4; font-weight: 500; }
 .plan-features li i { color: var(--success); font-size: 0.8rem; margin-top: 3px; background: rgba(74, 139, 92, 0.1); padding: 5px; border-radius: 50%; display: flex; align-items: center; justify-content: center; width: 22px; height: 22px; flex-shrink: 0; }
 .plan-card.popular .plan-features li i { color: var(--gold-dark); background: rgba(200,165,115,0.15); }
-
-
