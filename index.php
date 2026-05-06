@@ -90,6 +90,11 @@ if ($page === 'product' && isset($_GET['id'])) {
         "https://www.instagram.com/acusport2025",
         "https://www.facebook.com/profile.php?id=61581165574974"
       ],
+        "offers": {
+          "@type": "AggregateOffer",
+          "priceCurrency": "EUR",
+          "offerCount": "16"
+        },
     }
     </script>
     
