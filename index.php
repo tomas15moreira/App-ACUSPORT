@@ -30,7 +30,6 @@ try {
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#4A5A4A">
 <?php
-// Determine dynamic SEO tags
 $seo_title = "AcuSport — Suplementação Natural";
 $seo_desc = "Fórmulas de Medicina Tradicional Chinesa com rigor científico e qualidade europeia.";
 
@@ -63,17 +62,41 @@ if ($page === 'product' && isset($_GET['id'])) {
     <meta property="og:site_name" content="AcuSport">
     
     <title><?= $seo_title ?></title>
-    
-    <!-- Google Analytics (Exemplo de Integração) -->
-    <!--
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+
+    <!-- Google Analytics GA4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KP2BXBCE6T"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', 'G-XXXXXXXXXX');
+      gtag('config', 'G-KP2BXBCE6T');
     </script>
-    -->
+
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "OnlineStore",
+      "name": "AcuSport",
+      "description": "Plataforma de comércio eletrónico dedicada à comercialização de suplementação avançada com base na Medicina Tradicional Chinesa.",
+      "url": "https://app-acusport-production.up.railway.app",
+      "logo": "https://app-acusport-production.up.railway.app/assets/images/logo.png",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer service",
+        "availableLanguage": "Portuguese"
+      },
+      "sameAs": [
+        "https://www.instagram.com/acusport2025",
+        "https://www.facebook.com/profile.php?id=61581165574974"
+      ],
+      "offers": {
+        "@type": "AggregateOffer",
+        "priceCurrency": "EUR",
+        "offerCount": "16"
+      }
+    }
+    </script>
     
     <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="192x192" href="<?= ASSETS_URL ?>/images/icon-192.png">
