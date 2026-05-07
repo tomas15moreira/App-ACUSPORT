@@ -76,10 +76,6 @@ if (!$product) { echo '<div style="text-align:center;padding:60px 20px"><h2>Prod
 <script>
 function toggleAccordion(header) {
     var acc = header.closest('.accordion');
-    var isOpen = acc.classList.contains('open');
-    // Fechar todos
-    document.querySelectorAll('.accordion.open').forEach(function(el) { el.classList.remove('open'); });
-    // Abrir este se estava fechado
-    if (!isOpen) acc.classList.add('open');
+    acc.classList.toggle('closed');
 }
 </script>
