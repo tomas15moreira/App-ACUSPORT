@@ -53,22 +53,33 @@ if (!$product) { echo '<div style="text-align:center;padding:60px 20px"><h2>Prod
 
     <?php if ($product['descricao_mtc']): ?>
     <div class="accordion">
-        <div class="accordion-header"><h3 style="display: flex; align-items: center; gap: 8px;"><i class="fas fa-book-medical" style="color: var(--gold); font-size: 0.8rem;"></i> Descrição e Benefícios MTC</h3><i class="fas fa-chevron-down accordion-icon"></i></div>
+        <div class="accordion-header" onclick="toggleAccordion(this)"><h3 style="display: flex; align-items: center; gap: 8px;"><i class="fas fa-book-medical" style="color: var(--gold); font-size: 0.8rem;"></i> Descrição e Benefícios MTC</h3><i class="fas fa-chevron-down accordion-icon"></i></div>
         <div class="accordion-body"><p><?= nl2br(sanitize($product['descricao_mtc'])) ?></p></div>
     </div>
     <?php endif; ?>
 
     <?php if ($product['modo_utilizacao']): ?>
     <div class="accordion">
-        <div class="accordion-header"><h3 style="display: flex; align-items: center; gap: 8px;"><i class="fas fa-mortar-pestle" style="color: var(--gold); font-size: 0.8rem;"></i> Modo de Utilização &amp; Dosagem</h3><i class="fas fa-chevron-down accordion-icon"></i></div>
+        <div class="accordion-header" onclick="toggleAccordion(this)"><h3 style="display: flex; align-items: center; gap: 8px;"><i class="fas fa-mortar-pestle" style="color: var(--gold); font-size: 0.8rem;"></i> Modo de Utilização &amp; Dosagem</h3><i class="fas fa-chevron-down accordion-icon"></i></div>
         <div class="accordion-body"><p><?= nl2br(sanitize($product['modo_utilizacao'])) ?></p></div>
     </div>
     <?php endif; ?>
 
     <?php if ($product['restricoes']): ?>
     <div class="accordion">
-        <div class="accordion-header"><h3 style="display: flex; align-items: center; gap: 8px;"><i class="fas fa-exclamation-triangle" style="color: var(--gold); font-size: 0.8rem;"></i> Restrições &amp; Avisos Legais</h3><i class="fas fa-chevron-down accordion-icon"></i></div>
+        <div class="accordion-header" onclick="toggleAccordion(this)"><h3 style="display: flex; align-items: center; gap: 8px;"><i class="fas fa-exclamation-triangle" style="color: var(--gold); font-size: 0.8rem;"></i> Restrições &amp; Avisos Legais</h3><i class="fas fa-chevron-down accordion-icon"></i></div>
         <div class="accordion-body"><p><?= nl2br(sanitize($product['restricoes'])) ?></p></div>
     </div>
     <?php endif; ?>
 </div>
+
+<script>
+function toggleAccordion(header) {
+    var acc = header.closest('.accordion');
+    var isOpen = acc.classList.contains('open');
+    // Fechar todos
+    document.querySelectorAll('.accordion.open').forEach(function(el) { el.classList.remove('open'); });
+    // Abrir este se estava fechado
+    if (!isOpen) acc.classList.add('open');
+}
+</script>
