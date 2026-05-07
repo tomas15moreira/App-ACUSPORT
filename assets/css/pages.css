@@ -647,12 +647,12 @@
     flex-shrink: 0;
     transition: transform 0.3s ease;
 }
-.accordion.open .accordion-icon { transform: rotate(180deg); }
+.accordion.closed .accordion-icon { transform: rotate(-90deg); }
 .accordion-body {
-    display: none;
     padding: 0 18px 18px;
     background: var(--white);
 }
+.accordion.closed .accordion-body { display: none; }
 .accordion.open .accordion-body { display: block; }
 .accordion-body p {
     font-size: 0.85rem;
